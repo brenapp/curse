@@ -1,0 +1,30 @@
+.home {
+	padding: 20px;
+	min-height: 100%;
+	width: 100%;
+}
+
+.cardHeader {
+	padding: 16px;
+}
+
+.cardHeader * {
+	margin: 0 auto;
+}
+
+.cardBody {
+	padding: 16px;
+	padding-top: 0;
+}
+
+.red {
+	color: #F44336;
+}
+
+.blue {
+	color: #3F51B5;
+}
+
+.grey {
+	color: rgba(0, 0, 0, 0.38);
+}
