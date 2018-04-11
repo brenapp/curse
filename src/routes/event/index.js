@@ -6,6 +6,10 @@ import LayoutGrid from 'preact-material-components/LayoutGrid';
 import 'preact-material-components/LayoutGrid/style.css';
 import List from 'preact-material-components/List';
 import 'preact-material-components/List/style.css';
+import Tabs, { Tab } from 'preact-material-components/Tabs';
+import 'preact-material-components/Tabs/style.css';
+import DataTables from 'material-ui-datatables';
+
 
 import style from './style';
 
@@ -15,18 +19,18 @@ import { loadAll } from "../../lib/vexdb";
 
 const Stat = ({ title, value }) => (
 	<div>
-		<strong>{ title }: </strong>
-		<span>{ value }</span>
+		<strong>{title}: </strong>
+		<span>{value}</span>
 	</div>
 )
 
 const makeDates = event =>
 	Math.abs(Date.parse(event.start) - Date.parse(event.end)) < 24 * 60 * 60 * 1000 ?
 		new Date(event.start).toLocaleString() :
-		`${new Date(event.start).toLocaleString()}—${new Date(event.end).toLocaleString()}`	
+		`${new Date(event.start).toLocaleString()}—${new Date(event.end).toLocaleString()}`
 
 const itemize = (array, key) =>
-	[{}, ...array].reduce((obj, item) => (obj[item[key]] = item, obj))	
+	[{}, ...array].reduce((obj, item) => (obj[item[key]] = item, obj))
 
 function decodeHTML(html) {
 	var txt = document.createElement("textarea");
@@ -40,14 +44,14 @@ function sortToDivision(items) {
 	return out;
 }
 
-const isActiveTeam = (match, color, role) => match[color+role] != match[color+"sit"]
+const isActiveTeam = (match, color, role) => match[color + role] != match[color + "sit"]
 
 function formatTeams(match, color) {
 	return (
 		<span>
-			 <span class={ isActiveTeam(match, color, 1) ? style[color] : style.grey}>{match[color + "1"]} &#9;</span>
-			 <span class={ isActiveTeam(match, color, 2) ? style[color] : style.grey}>{match[color + "2"]} &#9;</span>
-			 <span class={ isActiveTeam(match, color, 3) ? style[color] : style.grey}>{match[color + "3"]} &#9;</span>
+			<span class={isActiveTeam(match, color, 1) ? style[color] : style.grey}>{match[color + "1"]} &#9;</span>
+			<span class={isActiveTeam(match, color, 2) ? style[color] : style.grey}>{match[color + "2"]} &#9;</span>
+			<span class={isActiveTeam(match, color, 3) ? style[color] : style.grey}>{match[color + "3"]} &#9;</span>
 		</span>
 	)
 }
@@ -57,6 +61,34 @@ function matchName(match) {
 		(match.round > 2 && match < 5 ? match.instance + "-" : "") +
 		match.matchnum;
 }
+
+function prepareMatch(match) {
+	return {
+		name: matchName(match),
+		red: formatTeams(match, "red"),
+		blue: formatTeams(match, "blue"),
+		...match
+	}
+}
+
+const MATCH_COLS = [
+	{ key: "name", label: "Match" },
+	{ key: "scheduled", label: "Time (scheduled)" },
+	{ key: "red", label: "Red" },
+	{ key: "blue", label: "Blue" },
+	{ key: "redscore", label: "Red Score" },
+	{ key: "bluescore", label: "Blue Score" }
+]
+
+
+const MatchGrid = ({ matches }) => (
+	<DataTables
+		selectable={true}
+		columns={MATCH_COLS}
+		data={matchs.map(prepareMatch)}
+	/>
+);
+
 
 export default class Event extends Component {
 	state = {
@@ -88,14 +120,14 @@ export default class Event extends Component {
 						<LayoutGrid.Cell cols="6">
 							<Card>
 								<div class={style.cardHeader}>
-									<h2 class="mdc-typography--title">{ event.name }</h2>
-									<div class="mdc-typography--subtitle">{ event.sku }</div>
+									<h2 class="mdc-typography--title">{event.name}</h2>
+									<div class="mdc-typography--subtitle">{event.sku}</div>
 								</div>
 								<div class={style.cardBody}>
-									<Stat title="Program" value={event.program} />	
+									<Stat title="Program" value={event.program} />
 									<Stat title="Teams" value={teams} />
 									<Stat title="Season" value={event.season} />
-									<Stat title="Dates" value={makeDates(event)}/>
+									<Stat title="Dates" value={makeDates(event)} />
 									<Stat title="Venue" value={event.loc_venue} />
 									<Stat title="Location" value={
 										[
@@ -103,7 +135,7 @@ export default class Event extends Component {
 											event.loc_city,
 											event.loc_region,
 											event.loc_country
-										].filter(a=>a).join(", ")
+										].filter(a => a).join(", ")
 									} />
 								</div>
 								<Card.Actions>
@@ -114,6 +146,32 @@ export default class Event extends Component {
 								</Card.Actions>
 							</Card>
 							<Card style={{ marginTop: "24px" }}>
+								<div class={style.cardHeader}>
+									<strong>Rankings</strong>
+								</div>
+								{ event.divisions.length - 1 ? 
+									<Tab scroller>
+										{ event.divisions.map(div =>
+											<Tabs.Tab>{ div }</Tabs.Tab>
+										)}
+									</Tab>	
+									
+								: null }
+								<List dense>
+									{rankings.map(rank =>
+										<List.LinkItem href={`/team/${rank.team}`} ripple>
+											<List.PrimaryText>{rank.rank}. {decodeHTML(teamInfo[rank.team].team_name)}</List.PrimaryText>
+											<span class="mdc-list-item__meta">{rank.team}</span>
+										</List.LinkItem>
+									)}
+								</List>
+							</Card>
+						</LayoutGrid.Cell>
+						<LayoutGrid.Cell cols="6">
+							<Card>
+								<div class={style.cardHeader}>
+									<strong>Matches</strong>
+								</div>
 								<List dense>
 									{matches.map(match =>
 										<List.Item ripple>
@@ -128,20 +186,8 @@ export default class Event extends Component {
 								</List>
 							</Card>
 						</LayoutGrid.Cell>
-						<LayoutGrid.Cell cols="6">
-							<Card>
-								<List dense>
-									{rankings.map(rank =>
-										<List.LinkItem href={`/team/${rank.team}`} ripple>
-											<List.PrimaryText>{rank.rank}. {decodeHTML(teamInfo[rank.team].team_name)}</List.PrimaryText>
-											<span class="mdc-list-item__meta">{rank.team}</span>
-										</List.LinkItem>
-									)}
-								</List>
-							</Card>
-						</LayoutGrid.Cell>
 					</LayoutGrid.Inner>
 				</LayoutGrid>
-			</div>	
+			</div>
 	}
 }

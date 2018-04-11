@@ -33,6 +33,7 @@
     "preact-compat": "^3.17.0",
     "preact-material-components": "^1.4.0",
     "preact-router": "^2.5.5",
-    "vexdb": "^0.5.21"
+    "vexdb": "^0.6.6",
+    "material-ui-databases": "^0.18.2"
   }
 }
