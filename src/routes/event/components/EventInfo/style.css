@@ -1,0 +1,12 @@
+.cardHeader {
+	padding: 16px;
+}
+
+.cardHeader * {
+	margin: 0 auto;
+}
+
+.cardBody {
+	padding: 16px;
+	padding-top: 0;
+}
