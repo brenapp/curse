@@ -1,10 +1,10 @@
-import { h, Component } from 'preact';
-import List from 'preact-material-components/List';
-import 'preact-material-components/List/style.css';
-import Icon from 'preact-material-components/Icon';
-import Button from 'preact-material-components/Button';
-import 'preact-material-components/Button/style.css';
-import style from './style';
+import { h, Component } from "preact";
+import List from "preact-material-components/List";
+import "preact-material-components/List/style.css";
+import Icon from "preact-material-components/Icon";
+import Button from "preact-material-components/Button";
+import "preact-material-components/Button/style.css";
+import style from "./style";
 
 import { route } from "preact-router";
 import { getEvents } from "../../lib/vexdb";

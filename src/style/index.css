@@ -59,3 +59,12 @@ html, body {
 .list-item :last-child {
   min-width: 36px;
 }
+
+.card-container {
+  margin: 0 auto; 
+  max-width: 760px; 
+}
+
+.card-container > * {
+  margin-bottom: 24px;
+}
