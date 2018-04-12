@@ -17,6 +17,7 @@ export default class Home extends Component {
 
 	componentDidMount() {
 		if (this.state.loaded) return;
+		document.title = "Project Curse";
 		getEvents(new Date("2018-03-09"))
 			.then(events => this.setState({ events, loaded: true }));
 	}
@@ -29,7 +30,7 @@ export default class Home extends Component {
 				<List two-line>
 					{events.map(event =>
 						<List.LinkItem ripple href={`/event/${event.sku}`} class="list-item" class={style.item}>
-							<span>{ event.name }</span>
+							<span>{event.name}</span>
 							<Icon>keyboard_arrow_right</Icon>
 						</List.LinkItem>
 					)}
