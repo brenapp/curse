@@ -63,4 +63,7 @@ typings/
 yarn.lock
 package-lock.json
 
-.vscode
+# VSCode
+.vscode/chrome/
+
+build
