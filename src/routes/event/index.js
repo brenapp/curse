@@ -51,17 +51,11 @@ export default class Event extends Component {
 
 		document.title = `${event.name} | Project Curse`
 		return <div>
-			<LayoutGrid>
-				<LayoutGrid.Inner>
-					<LayoutGrid.Cell cols="7">
-						<EventInfo data={data} />
-						<EventRankings data={data} />
-					</LayoutGrid.Cell>
-					<LayoutGrid.Cell cols="5">
-						<EventMatches data={data} />
-					</LayoutGrid.Cell>
-				</LayoutGrid.Inner>
+			<LayoutGrid class={style.space}>
+				<EventInfo data={data} />
+				<EventRankings data={data} />
+				<EventMatches data={data} />
 			</LayoutGrid>
-		</div>
+		</div >
 	}
 }

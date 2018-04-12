@@ -17,6 +17,10 @@
 	padding-top: 0;
 }
 
+.space > * {
+	margin-bottom: 24px;
+}
+
 .red {
 	color: #F44336;
 }
