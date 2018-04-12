@@ -1,24 +1,14 @@
 import { h, Component } from 'preact';
-import Card from 'preact-material-components/Card';
-import 'preact-material-components/Card/style.css';
-import 'preact-material-components/Button/style.css';
-import LayoutGrid from 'preact-material-components/LayoutGrid';
-import 'preact-material-components/LayoutGrid/style.css';
-import List from 'preact-material-components/List';
-import 'preact-material-components/List/style.css';
-import Tabs from 'preact-material-components/Tabs';
-import 'preact-material-components/Tabs/style.css';
-import DataTables from 'material-ui-datatables';
+import LayoutGrid from "preact-material-components/LayoutGrid";
+import "preact-material-components/LayoutGrid/style.css";
 
 import DivisionTabs from './components/DivisionTabs';
 import EventInfo from "./components/EventInfo";
 import EventRankings from "./components/EventRankings";
 import EventMatches from "./components/EventMatches";
-
 import style from './style';
 
-import { route } from "preact-router";
-import { get, cache } from "vexdb";
+import { get } from "vexdb";
 import { loadAll } from "../../lib/vexdb";
 
 const itemize = (array, key) =>
@@ -52,9 +42,11 @@ export default class Event extends Component {
 		document.title = `${event.name} | Project Curse`
 		return <div>
 			<LayoutGrid class={style.space}>
-				<EventInfo data={data} />
-				<EventRankings data={data} />
-				<EventMatches data={data} />
+				<div class="card-container">
+					<EventInfo data={data} />
+					<EventRankings data={data} />
+					<EventMatches data={data} />
+				</div>
 			</LayoutGrid>
 		</div >
 	}
