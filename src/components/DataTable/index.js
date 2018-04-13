@@ -11,27 +11,47 @@ import Label from "../Label";
 
 import style from "./style"
 
-export default class DataTable extends Component {
-    state = {
-        selection: []
+class TableRow extends Component {
+
+    constructor({ selected }) {
+        super();
+        this.state = { selected }
+        
+    }
+    componentWillUpdate({ selected }) {
+        this.setState({ selected });
     }
 
-    render({ selectable, cols, data }) {
+    render({ items, header, selectable, selected, onChange}) {
+        
+        return <List.Item class={`${header ? style.header : style.main} ${this.state.selected && !header ? style.selected : ""}`}>
+            {selectable ?
+                <Checkbox id="basic-checkbox" class={style.checkbox}  onChange={
+                    () => (this.setState({ selected: !this.state.selected }), onChange(this.state.selected))
+                } checked={this.state.selected}/>
+                : null}
+            {items.map((col, i) => <span>{items[i]}</span>)}
+        </List.Item>
+    }
+}
+
+export default class DataTable extends Component {
+
+    constructor({ data }) {
+        super()
+        this.state = {
+            selected: Array(data.length).fill(false)
+        }
+    }
+
+    render({ selectable, cols, data }, { selected }) {
         return <div class={style.fullwidth}>
             <List>
-                <List.Item class={style.header}>
-                    {selectable ?
-                        <Checkbox id="basic-checkbox" class={style.checkbox} />
-                        : null}
-                    {cols.map(col => <span>{col}</span>)}
-                </List.Item>
-                {data.map(item =>
-                    <List.Item class={style.main}>
-                        {selectable ?
-                            <Checkbox id="basic-checkbox" class={style.checkbox} />
-                            : null}
-                        {cols.map((col, i) => <span>{item[i]}</span>)}
-                    </List.Item>
+                <TableRow selectable header items={cols} onChange={
+                    state => this.setState({ selected: Array(data.length).fill(state) })
+                } />
+                {data.map((item, i) =>
+                    <TableRow selectable items={item} selected={selected[i]}/>
                 )}
             </List>
         </div >
