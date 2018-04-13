@@ -2,6 +2,44 @@
   width: 100%;
 }
 
+.table {
+  padding-top: 0;
+}
+
+.action {
+  margin-top: 6px;
+}
+
+
+.iconButton {
+  height: 24px;
+  margin: 0 12px;
+  color: rgba(0, 0, 0, 0.54);
+  cursor: pointer;
+}
+
+.flex {
+  flex: 1;
+}
+
+.tableSelection {
+  background-color: var(--mdc-theme-primary, #6200ee);
+  color: #ffffff;
+  z-index: 101;
+  position: sticky;
+  top: 4px;
+}
+
+@media (min-width: 600px) {
+  .tableSelection {
+    top: 8px;
+  }
+}
+
+.tableSelection * {
+  color: #ffffff;
+}
+
 .checkbox {
   margin-right: 24px;
 }
