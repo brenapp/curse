@@ -53,8 +53,8 @@ export default class Header extends Component {
 
 	render() {
 		return (
-			<div>
-				<TopAppBar className="topappbar" onNav={this.openDrawer}>
+			<div style={{ paddingBottom: "64px" }}>
+				<TopAppBar className="topappbar" onNav={this.openDrawer} style={{ position: "fixed", left: 0, right: 0, zIndex: 100}}>
 					<TopAppBar.Row>
 						<TopAppBar.Section align-start>
 							<TopAppBar.Icon navigation>menu</TopAppBar.Icon>
@@ -62,12 +62,9 @@ export default class Header extends Component {
 								Project Curse
 							</TopAppBar.Title>
 						</TopAppBar.Section>
-						<TopAppBar.Section align-end>
-							<TopAppBar.Icon>more_vert</TopAppBar.Icon>
-						</TopAppBar.Section>
 					</TopAppBar.Row>
 				</TopAppBar>
-				<Drawer.TemporaryDrawer ref={this.drawerRef}>
+				<Drawer.TemporaryDrawer ref={this.drawerRef} style={{ marginTop: "64px" }}>
 					<Drawer.TemporaryDrawerContent>
 						<Drawer.DrawerItem onClick={this.goHome}>
 							<List.ItemGraphic>home</List.ItemGraphic>
