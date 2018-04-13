@@ -70,5 +70,6 @@ html, body {
 }
 
 :root {
-  --mdc-theme-secondary: #6200ee;
+  --mdc-theme-primary: #673ab7;
+  --mdc-theme-secondary: #6200ee !important;
 }
