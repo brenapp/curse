@@ -68,3 +68,7 @@ html, body {
 .card-container > * {
   margin-bottom: 24px;
 }
+
+:root {
+  --mdc-theme-secondary: #6200ee;
+}
