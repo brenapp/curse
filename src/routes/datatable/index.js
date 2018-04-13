@@ -12,6 +12,7 @@ export default class DataTableTest extends Component {
                         selectable={true}
                         cols={["SKU", "Name", "Teams", "Region", "Type"]}
                         data={Array(10).fill(["A", "B", "C", "D", "E"])}
+                        title={"Some Data"}
                     />
                 </Card.Media>
                 <Card.Actions>
